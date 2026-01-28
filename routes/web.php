@@ -21,6 +21,30 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+
+Route::group(['prefix' => 'admin'], function () {
+
+    Route::group(['middleware' => 'admin.guest'], function () {
+      Route::get('login', [App\Http\Controllers\admin\AdminLoginController::class, 'index'])->name('admin.login');
+     Route::post('authenticate', [App\Http\Controllers\admin\AdminLoginController::class, 'authenticate'])->name('admin.authenticate');
+    });
+
+
+
+    Route::group(['middleware' => 'admin.auth'], function () {
+        Route::get('dashboard', [App\Http\Controllers\admin\HomeController::class, 'index'])->name('admin.dashboard');
+    Route::get('logout', [App\Http\Controllers\admin\HomeController::class, 'logout'])->name('admin.logout');
+    });
+
+
+
+
+
+});
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -59,7 +83,7 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware(['permission:permission_management_access'])->group(function () {
         Route::get('/permissions', [PermissionController::class, 'index'])->name('permission.index');
-        
+
         Route::get('/permissions/create', [PermissionController::class, 'create'])->name('permission.create');
         Route::get('/permissions/edit/{permission}', [PermissionController::class, 'edit'])->name('permission.edit');
         Route::get('/permissions/show/{permission}', [PermissionController::class, 'show'])->name('permission.show');

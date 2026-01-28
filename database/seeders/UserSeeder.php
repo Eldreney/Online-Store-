@@ -30,19 +30,14 @@ class UserSeeder extends Seeder
         ]);
         $admin->assignRole('admin');
 
-        $standardUser = User::create([
-            'name' => 'Writer',
-            'email' => 'writer@laravel.com',
-            'password' => Hash::make('P@ssW0rd123'),
-        ]);
-        $standardUser->assignRole('writer');
 
-        $standardUser2 = User::create([
-            'name' => 'Reader',
-            'email' => 'reader@laravel.com',
+        $customer = User::create([
+            'name' => 'Customer',
+            'email' => 'customer@laravel.com',
             'password' => Hash::make('P@ssW0rd123'),
         ]);
-        $standardUser2->assignRole('reader');
+        $customer->assignRole('customer');
+
     }
 
 }

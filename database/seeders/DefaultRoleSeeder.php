@@ -64,14 +64,11 @@ class DefaultRoleSeeder extends Seeder
         ];
         $adminRole->syncPermissions($adminPermissions);
 
-        // all permissions of `writer` users
-        $standardUserRole = Role::create(['name' => 'writer']);
+        // all permissions of `customer users
+        $customerUserRole = Role::create(['name' => 'customer']);
         $standardUserPermissions = [];
-        $standardUserRole->syncPermissions($standardUserPermissions);
+        $customerUserRole->syncPermissions($standardUserPermissions);
 
-        $readerRole = Role::create(['name' => 'reader']);
-        $readerPermissions = [];
-        $readerRole->syncPermissions($readerPermissions);
     }
 
 }
