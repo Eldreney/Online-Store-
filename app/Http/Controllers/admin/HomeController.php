@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public function index(){
-      Auth::guard('admin')->user();
+    //   Auth::guard('admin')->user();
 
-      echo "weclome to admin dashboard";
+    //   echo "weclome to admin dashboard";
+
+
+    return view('admin.dashboard');
     }
 
 
