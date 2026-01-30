@@ -16,48 +16,43 @@ public function index(){
     }
 
 
-    public function authenticate(Request $request){
+  public function authenticate(Request $request)
+{
     $validator = Validator::make($request->all(), [
         'email' => 'required|email',
         'password' => 'required|min:6',
     ]);
 
-if ($validator->passes()) {
-
-        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
-
-        $admin = Auth::guard('admin')->user();
-
-        if($admin->role==2){
-            return redirect()->route('admin.dashboard');
-        }else {
-
-            Auth::guard('admin')->logout();
-            return redirect()->route('admin.login')
-                ->withErrors(['credentials' => 'You do not have admin access.'])
-                ->withInput($request->only('email'));
-        }
-
-        return redirect()->route('admin.dashboard');
-
-
-            }else {
-            return redirect()->route('admin.login')
-                ->withErrors(['credentials' => 'Invalid email or password.'])
-                ->withInput($request->only('email'));
-        }
-
-
-
-
-    }else {
+    if (!$validator->passes()) {
         return redirect()->route('admin.login')
             ->withErrors($validator)
             ->withInput($request->only('email'));
-
     }
 
+    $remember = $request->boolean('remember');
+
+    if (!Auth::guard('admin')->attempt($request->only('email', 'password'), $remember)) {
+        return redirect()->route('admin.login')
+            ->withErrors(['credentials' => 'Invalid email or password.'])
+            ->withInput($request->only('email'));
     }
+
+
+    $request->session()->regenerate();
+
+    $admin = Auth::guard('admin')->user();
+
+
+    if ((int)$admin->role !== 2) {
+        Auth::guard('admin')->logout();
+
+        return redirect()->route('admin.login')
+            ->withErrors(['credentials' => 'You do not have admin access.'])
+            ->withInput($request->only('email'));
+    }
+
+    return redirect()->route('admin.dashboard');
+}
 
 
 

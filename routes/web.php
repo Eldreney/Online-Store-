@@ -1,10 +1,13 @@
 <?php
 
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+
+use App\Http\Controllers\PermissionController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,12 +38,31 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['middleware' => 'admin.auth'], function () {
         Route::get('dashboard', [App\Http\Controllers\admin\HomeController::class, 'index'])->name('admin.dashboard');
-    Route::get('logout', [App\Http\Controllers\admin\HomeController::class, 'logout'])->name('admin.logout');
-    });
+     Route::get('logout', [App\Http\Controllers\admin\HomeController::class, 'logout'])->name('admin.logout');
+
+//category routes
+Route::get('/categories', [App\Http\Controllers\admin\CategoryController::class, 'index'])->name('category.index');
+Route::get('/categories/create', [App\Http\Controllers\admin\CategoryController::class, 'create'])->name('category.create');
+Route::post('/categories', [App\Http\Controllers\admin\CategoryController::class, 'store'])->name('category.store');
+
+
+Route::get('/getSlug', function (Request $request) {
+    $slug = '';
+
+    if ($request->title) {
+        $slug = Str::slug($request->title);
+    }
+
+    return response()->json([
+        'status' => true,
+        'slug' => $slug
+    ]);
+})->name('getSlug');
 
 
 
 
+});
 
 });
 
