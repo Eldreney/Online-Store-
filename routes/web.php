@@ -46,6 +46,9 @@ Route::get('/categories/create', [App\Http\Controllers\admin\CategoryController:
 Route::post('/categories', [App\Http\Controllers\admin\CategoryController::class, 'store'])->name('category.store');
 
 
+     Route::post('/temp-images', [App\Http\Controllers\admin\TempImageController::class, 'store'])
+            ->name('temp-images.store');
+
 Route::get('/getSlug', function (Request $request) {
     $slug = '';
 
