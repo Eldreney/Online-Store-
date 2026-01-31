@@ -77,7 +77,7 @@
 
                     <tbody>
                         @forelse($categories as $category)
-                            <tr>
+                            <tr id="row-{{ $category->id }}">
                                 <td>{{ $category->id }}</td>
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->slug }}</td>
@@ -90,11 +90,16 @@
                                 </td>
 
                                 <td>
-                                    <a href="#" title="Edit">
+                                    {{-- Edit --}}
+                                    <a href="{{ route('category.edit', $category->id) }}" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
 
-                                    <a href="#" class="text-danger ml-2" title="Delete">
+                                    {{-- Delete --}}
+                                    <a href="javascript:void(0)"
+                                       onclick="deleteCategory({{ $category->id }})"
+                                       class="text-danger ml-2"
+                                       title="Delete">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
@@ -121,4 +126,32 @@
     </div>
 </section>
 
+@endsection
+
+
+@section('customJs')
+<script>
+    function deleteCategory(id) {
+        if (!confirm('Are you sure you want to delete this category?')) {
+            return;
+        }
+
+        $.ajax({
+            url: "{{ url('admin/categories') }}/" + id,
+            type: "DELETE",
+            dataType: "json",
+            success: function (response) {
+                if (response.status === true) {
+                    // remove row without refresh (nice UX)
+                    $('#row-' + id).remove();
+                } else {
+                    alert(response.message ?? 'Delete failed.');
+                }
+            },
+            error: function () {
+                alert('Something went wrong.');
+            }
+        });
+    }
+</script>
 @endsection

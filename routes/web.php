@@ -46,6 +46,12 @@ Route::get('/categories/create', [App\Http\Controllers\admin\CategoryController:
 Route::post('/categories', [App\Http\Controllers\admin\CategoryController::class, 'store'])->name('category.store');
 
 
+Route::get('/categories/{category}/edit', [App\Http\Controllers\admin\CategoryController::class, 'edit'])->name('category.edit');
+Route::put('/categories/{category}', [App\Http\Controllers\admin\CategoryController::class, 'update'])->name('category.update');
+Route::delete('/categories/{category}', [App\Http\Controllers\admin\CategoryController::class, 'destroy'])->name('category.destroy');
+
+
+
      Route::post('/temp-images', [App\Http\Controllers\admin\TempImageController::class, 'store'])
             ->name('temp-images.store');
 
