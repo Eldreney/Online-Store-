@@ -62,6 +62,17 @@ Route::put('/subcategories/{subcategory}', [App\Http\Controllers\admin\SubCatego
 Route::delete('/subcategories/{subcategory}', [App\Http\Controllers\admin\SubCategoryController::class, 'destroy'])->name('subcategory.destroy');
 
 
+// brand routes
+Route::get('/brands', [App\Http\Controllers\admin\BrandController::class, 'index'])->name('brand.index');
+Route::get('/brands/create', [App\Http\Controllers\admin\BrandController::class, 'create'])->name('brand.create');
+Route::post('/brands', [App\Http\Controllers\admin\BrandController::class, 'store'])->name('brand.store');
+
+Route::get('/brands/{brand}/edit', [App\Http\Controllers\admin\BrandController::class, 'edit'])->name('brand.edit');
+Route::put('/brands/{brand}', [App\Http\Controllers\admin\BrandController::class, 'update'])->name('brand.update');
+
+Route::delete('/brands/{brand}', [App\Http\Controllers\admin\BrandController::class, 'destroy'])->name('brand.destroy');
+
+
 
 
      Route::post('/temp-images', [App\Http\Controllers\admin\TempImageController::class, 'store'])
