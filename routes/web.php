@@ -52,6 +52,18 @@ Route::delete('/categories/{category}', [App\Http\Controllers\admin\CategoryCont
 
 
 
+//subcategory routes
+Route::get('/subcategories', [App\Http\Controllers\admin\SubCategoryController::class
+, 'index'])->name('subcategory.index');
+Route::get('/subcategories/create', [App\Http\Controllers\admin\SubCategoryController::class, 'create'])->name('subcategory.create');
+Route::post('/subcategories', [App\Http\Controllers\admin\SubCategoryController::class, 'store'])->name('subcategory.store');
+Route::get('/subcategories/{subcategory}/edit', [App\Http\Controllers\admin\SubCategoryController::class, 'edit'])->name('subcategory.edit');
+Route::put('/subcategories/{subcategory}', [App\Http\Controllers\admin\SubCategoryController::class, 'update'])->name('subcategory.update');
+Route::delete('/subcategories/{subcategory}', [App\Http\Controllers\admin\SubCategoryController::class, 'destroy'])->name('subcategory.destroy');
+
+
+
+
      Route::post('/temp-images', [App\Http\Controllers\admin\TempImageController::class, 'store'])
             ->name('temp-images.store');
 

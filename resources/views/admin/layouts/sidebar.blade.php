@@ -33,8 +33,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#"
-                       class="nav-link">
+                  <a href="{{ route('subcategory.index') }}"
+                     class="nav-link {{ request()->routeIs('subcategory.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-file-alt"></i>
                         <p>Sub Category</p>
                     </a>
