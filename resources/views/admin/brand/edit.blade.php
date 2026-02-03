@@ -94,7 +94,7 @@
         e.preventDefault();
 
         $.ajax({
-            type: "POST", // because @method('PUT')
+            type: "POST",
             url: "{{ route('brand.update', $brand->id) }}",
             data: $(this).serialize(),
             dataType: "json",

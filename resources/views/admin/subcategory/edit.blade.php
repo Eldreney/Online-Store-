@@ -108,7 +108,7 @@
         e.preventDefault();
 
         $.ajax({
-            type: "POST", // because @method('PUT')
+            type: "POST",
             url: "{{ route('subcategory.update', $subcategory->id) }}",
             data: $(this).serialize(),
             dataType: "json",

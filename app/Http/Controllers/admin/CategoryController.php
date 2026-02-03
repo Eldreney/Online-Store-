@@ -59,7 +59,7 @@ public function store(Request $request)
     $category->slug = $request->slug;
     $category->status = $request->status;
 
-    // handle image (temp -> uploads + thumb)
+  
     if ($request->filled('image_id')) {
 
         $tempImage = TempImage::find($request->image_id);
