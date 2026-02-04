@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Product\Http\Requests;
+namespace Modules\Product\App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -30,7 +30,7 @@ class StoreProductRequest extends FormRequest
             'sku' => 'required|string|max:100',
             'barcode' => 'nullable|string|max:100',
 
-            'track_qty' => 'required|in:Yes,No',
+            // 'track_qty' => 'required|in:Yes,No',
             'qty' => 'nullable|integer|min:0',
 
             'status' => 'required|in:0,1',

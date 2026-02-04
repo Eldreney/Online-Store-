@@ -5,9 +5,11 @@ namespace Modules\Product\App\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Modules\Product\App\Http\Requests\UpdateProductRequest;
+
+use Modules\Product\App\Http\Requests\StoreProductRequest;
 use Modules\Product\Repositories\ProductRepositoryInterface;
-use Modules\Product\Http\Requests\StoreProductRequest;
-use Modules\Product\Http\Requests\UpdateProductRequest;
+
 
 class ProductController extends Controller
 {
@@ -23,7 +25,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        // use your existing Category/SubCategory/Brand models
+   
         $categories = \App\Models\Category::where('status',1)->orderBy('name')->get();
         $subCategories = \App\Models\SubCategory::where('status',1)->orderBy('name')->get();
         $brands = \App\Models\Brand::where('status',1)->orderBy('name')->get();
