@@ -25,7 +25,7 @@ class ProductController extends Controller
 
     public function create()
     {
-   
+
         $categories = \App\Models\Category::where('status',1)->orderBy('name')->get();
         $subCategories = \App\Models\SubCategory::where('status',1)->orderBy('name')->get();
         $brands = \App\Models\Brand::where('status',1)->orderBy('name')->get();
