@@ -54,8 +54,8 @@
 
 
                 <li class="nav-item">
-                    <a href="#"
-                       class="nav-link">
+                    <a href="{{ route('admin.product.index') }}"
+                       class="nav-link {{ request()->routeIs('admin.product.*') ? 'active' : '' }}  ">
                         <i class="nav-icon fas fa-tag"></i>
                         <p>Products</p>
                     </a>

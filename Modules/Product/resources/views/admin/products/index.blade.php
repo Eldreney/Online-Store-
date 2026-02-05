@@ -24,7 +24,7 @@
                                    class="form-control float-right" placeholder="Search by title / slug / sku">
                             <div class="input-group-append">
                                 @if(request('search'))
-                                    <a href="{{ route('product.index') }}" class="btn btn-outline-secondary">Reset</a>
+                                    <a href="{{ route('admin.product.index') }}" class="btn btn-outline-secondary">Reset</a>
                                 @endif
                                 <button type="submit" class="btn btn-default">
                                     <i class="fas fa-search"></i>

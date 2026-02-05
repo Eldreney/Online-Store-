@@ -6,7 +6,9 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Modules\Product\App\Http\Requests\UpdateProductRequest;
-
+use Modules\Brand\App\Models\Brand;
+use Modules\Category\App\Models\Category;
+use Modules\Category\App\Models\SubCategory;
 use Modules\Product\App\Http\Requests\StoreProductRequest;
 use Modules\Product\Repositories\ProductRepositoryInterface;
 
@@ -26,9 +28,9 @@ class ProductController extends Controller
     public function create()
     {
 
-        $categories = \App\Models\Category::where('status',1)->orderBy('name')->get();
-        $subCategories = \App\Models\SubCategory::where('status',1)->orderBy('name')->get();
-        $brands = \App\Models\Brand::where('status',1)->orderBy('name')->get();
+        $categories = Category::where('status',1)->orderBy('name')->get();
+        $subCategories = SubCategory::where('status',1)->orderBy('name')->get();
+        $brands = Brand::where('status',1)->orderBy('name')->get();
 
         return view('product::admin.products.create', compact('categories','subCategories','brands'));
     }
@@ -62,9 +64,9 @@ class ProductController extends Controller
     {
         $product = $this->products->findOrFail($product);
 
-        $categories = \App\Models\Category::where('status',1)->orderBy('name')->get();
-        $subCategories = \App\Models\SubCategory::where('status',1)->orderBy('name')->get();
-        $brands = \App\Models\Brand::where('status',1)->orderBy('name')->get();
+        $categories = Category::where('status',1)->orderBy('name')->get();
+        $subCategories = SubCategory::where('status',1)->orderBy('name')->get();
+        $brands = Brand::where('status',1)->orderBy('name')->get();
 
         return view('product::admin.products.edit', compact('product','categories','subCategories','brands'));
     }

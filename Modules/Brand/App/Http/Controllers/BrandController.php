@@ -3,65 +3,68 @@
 namespace Modules\Brand\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Modules\Brand\App\Models\Brand;
+use Modules\Brand\App\Http\Requests\StoreBrandRequest;
+use Modules\Brand\App\Http\Requests\UpdateBrandRequest;
 
 class BrandController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        return view('brand::index');
+        $search = $request->query('search');
+
+        $brands = Brand::query()
+            ->when($search, function ($q) use ($search) {
+                $q->where(function ($qq) use ($search) {
+                    $qq->where('name', 'like', "%{$search}%")
+                       ->orWhere('slug', 'like', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->paginate(10)
+            ->appends(['search' => $search]);
+
+        return view('brand::admin.list', compact('brands', 'search'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('brand::create');
+        return view('brand::admin.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreBrandRequest $request)
     {
-        //
+        Brand::create($request->validated());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Brand created successfully.'
+        ]);
     }
 
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
+    public function edit(Brand $brand)
     {
-        return view('brand::show');
+        return view('brand::admin.edit', compact('brand'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
+    public function update(UpdateBrandRequest $request, Brand $brand)
     {
-        return view('brand::edit');
+        $brand->update($request->validated());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Brand updated successfully.'
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id): RedirectResponse
+    public function destroy(Brand $brand)
     {
-        //
-    }
+        $brand->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json([
+            'status' => true,
+            'message' => 'Brand deleted successfully.'
+        ]);
     }
 }

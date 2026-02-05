@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace Modules\Category\App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Modules\Category\App\Models\Category;
+use Modules\Category\App\Models\SubCategory;
 
 class SubCategoryController extends Controller
 {
@@ -38,13 +38,13 @@ class SubCategoryController extends Controller
             'category_id' => $categoryId
         ]);
 
-    return view('admin.subcategory.list', compact('subcategories', 'categories', 'search', 'categoryId'));
+    return view('category::admin.subcategory.list', compact('subcategories', 'categories', 'search', 'categoryId'));
 }
 
     public function create()
     {
         $categories = Category::orderBy('name')->get();
-        return view('admin.subcategory.create', compact('categories'));
+        return view('category::admin.subcategory.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -79,7 +79,7 @@ class SubCategoryController extends Controller
     public function edit(SubCategory $subcategory)
     {
         $categories = Category::orderBy('name')->get();
-        return view('admin.subcategory.edit', compact('subcategory', 'categories'));
+        return view('category::admin.subcategory.edit', compact('subcategory', 'categories'));
     }
 
     public function update(Request $request, SubCategory $subcategory)
